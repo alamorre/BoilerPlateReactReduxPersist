@@ -17,10 +17,18 @@ class HomePage extends Component {
     render() {
         return(
             <Checkbox onClick={this.onCheck.bind(this)}>
-                This is the home page.
+                Log me in!
             </Checkbox>
         )
     }
 }
 
-export default HomePage;
+function mapStateToProps(state){
+    return {};
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
