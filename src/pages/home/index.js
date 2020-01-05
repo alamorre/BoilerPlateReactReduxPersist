@@ -3,20 +3,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Checkbox } from 'antd'
+import { Checkbox } from 'antd';
+
+import { loginAuth, logoutAuth } from '../../actions/account';
 
 class HomePage extends Component {
     state = {
         checked: false
     }
     
-    onCheck() {
-        this.setState({ checked: !this.state.checked });
+    onCheck() { 
+        if(this.props.account.authenticated){
+            this.props.logoutAuth(); 
+        } else {
+            this.props.loginAuth(); 
+        }
     }
 
     render() {
         return(
-            <Checkbox onClick={this.onCheck.bind(this)}>
+            <Checkbox checked={this.props.account.authenticated} onClick={this.onCheck.bind(this)}>
                 Log me in!
             </Checkbox>
         )
@@ -24,11 +30,11 @@ class HomePage extends Component {
 }
 
 function mapStateToProps(state){
-    return {};
+    return { account: state.account };
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators({ loginAuth, logoutAuth }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
